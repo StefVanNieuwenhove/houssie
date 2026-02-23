@@ -2,6 +2,17 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Houssie.Core", "Houssie.Core\Houssie.Core.csproj", "{9E39F910-BC7F-44CB-8151-9CA43A6F6F8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Houssie.Application", "Houssie.Application\Houssie.Application.csproj", "{C12EAC35-1E53-41CA-8CA4-0C5347F4A8A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Houssie.Infrastructure", "Houssie.Infrastructure\Houssie.Infrastructure.csproj", "{F99BC6EB-93FE-4869-81A2-F34590AF95CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Houssie.Api", "Houssie.Api\Houssie.Api.csproj", "{3ACD141F-3F9B-4ACC-A872-DF3BC9C7808C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{918DB204-2A0F-4F4F-A976-18663BF293AA}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +23,17 @@ Global
 		{9E39F910-BC7F-44CB-8151-9CA43A6F6F8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E39F910-BC7F-44CB-8151-9CA43A6F6F8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E39F910-BC7F-44CB-8151-9CA43A6F6F8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C12EAC35-1E53-41CA-8CA4-0C5347F4A8A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C12EAC35-1E53-41CA-8CA4-0C5347F4A8A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C12EAC35-1E53-41CA-8CA4-0C5347F4A8A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C12EAC35-1E53-41CA-8CA4-0C5347F4A8A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99BC6EB-93FE-4869-81A2-F34590AF95CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99BC6EB-93FE-4869-81A2-F34590AF95CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99BC6EB-93FE-4869-81A2-F34590AF95CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99BC6EB-93FE-4869-81A2-F34590AF95CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ACD141F-3F9B-4ACC-A872-DF3BC9C7808C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ACD141F-3F9B-4ACC-A872-DF3BC9C7808C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ACD141F-3F9B-4ACC-A872-DF3BC9C7808C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ACD141F-3F9B-4ACC-A872-DF3BC9C7808C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

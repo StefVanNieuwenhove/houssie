@@ -1,4 +1,4 @@
-namespace Houssie.Core.Models;
+namespace Houssie.Core;
 
 public class Todo
 {

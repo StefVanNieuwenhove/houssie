@@ -1,7 +1,7 @@
+using Houssie.Core;
 using Houssie.Core.DTOs;
-using Houssie.Core.Models;
 
-namespace Houssie.Core.Interfaces.Service;
+namespace Houssie.Application.Interfaces;
 
 public interface ITodoService
 {

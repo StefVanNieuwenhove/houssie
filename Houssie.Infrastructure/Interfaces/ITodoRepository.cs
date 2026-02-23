@@ -1,6 +1,6 @@
-using Houssie.Core.Models;
+using Houssie.Core;
 
-namespace Houssie.Core.Interfaces.Repository;
+namespace Houssie.Infrastructure.Interfaces;
 
 public interface ITodoRepository
 {
