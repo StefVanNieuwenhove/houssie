@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Houssie.Core\Houssie.Core.csproj" />
-      <ProjectReference Include="..\Houssie.Infrastructure\Houssie.Infrastructure.csproj" />
+        <ProjectReference Include="..\Houssie.Core\Houssie.Core.csproj"/>
+        <ProjectReference Include="..\Houssie.Infrastructure\Houssie.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

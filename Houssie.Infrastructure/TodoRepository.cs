@@ -13,7 +13,7 @@ public class TodoRepository : ITodoRepository
     {
         _context = context;
     }
-    
+
     public async Task<IReadOnlyList<Todo>> GetAllTodos()
     {
         try

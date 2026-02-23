@@ -5,8 +5,9 @@ namespace Houssie.Infrastructure;
 
 public class HoussieDbContext : DbContext
 {
-    public DbSet<Todo> Todos => Set<Todo>();
-    
-    public HoussieDbContext(DbContextOptions<HoussieDbContext> options) : base(options) {}
+    public HoussieDbContext(DbContextOptions<HoussieDbContext> options) : base(options)
+    {
+    }
 
+    public DbSet<Todo> Todos => Set<Todo>();
 }

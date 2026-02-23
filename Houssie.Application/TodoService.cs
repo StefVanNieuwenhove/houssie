@@ -8,12 +8,12 @@ namespace Houssie.Application;
 public class TodoService : ITodoService
 {
     private readonly ITodoRepository _repostory;
-    
+
     public TodoService(ITodoRepository repository)
     {
         _repostory = repository;
     }
-    
+
     public async Task<IReadOnlyList<Todo>> GetAllTodos()
     {
         try
