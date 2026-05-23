@@ -1,0 +1,81 @@
+name: PR Docker Build
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-docker-and-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release
+
+      # -----------------------------
+      # Build Docker image
+      # -----------------------------
+      - name: Build Docker image
+        run: |
+          IMAGE_NAME=houssie-api
+          TAG=pr-${{ github.event.pull_request.number }}
+
+          docker build -t $IMAGE_NAME:$TAG .
+
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      # -----------------------------
+      # Save Docker image as .tar
+      # -----------------------------
+      - name: Export Docker image
+        run: |
+          docker save ${IMAGE_NAME}:${TAG} -o houssie-api-${TAG}.tar
+
+      # -----------------------------
+      # Build Docker Compose stack
+      # -----------------------------
+      - name: Generate docker-compose file
+        run: |
+          cat <<EOF > docker-compose.generated.yml
+          version: "3.9"
+
+          services:
+            api:
+              image: ${IMAGE_NAME}:${TAG}
+              container_name: houssie-api
+              ports:
+                - "8080:8080"
+              environment:
+                ASPNETCORE_ENVIRONMENT: "Production"
+              restart: unless-stopped
+          EOF
+
+      # -----------------------------
+      # Upload artifacts
+      # -----------------------------
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: houssie-api-${TAG}.tar
+
+      - name: Upload docker-compose.yml
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-compose
+          path: docker-compose.generated.yml
