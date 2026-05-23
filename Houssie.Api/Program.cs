@@ -8,7 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+//builder.Services.AddOpenApi();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy => policy.WithOrigins("http://localhost:5173")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod()
+    );
+});
 
 builder.Services.AddControllers();
 
@@ -36,6 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Houssie API v1"); });
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
