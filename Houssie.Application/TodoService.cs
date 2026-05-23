@@ -1,6 +1,7 @@
 using Houssie.Application.Interfaces;
 using Houssie.Core;
 using Houssie.Core.DTOs;
+using Houssie.Core.Exceptions;
 using Houssie.Infrastructure.Interfaces;
 
 namespace Houssie.Application;
@@ -14,40 +15,132 @@ public class TodoService : ITodoService
         _repostory = repository;
     }
 
-    public async Task<IReadOnlyList<Todo>> GetAllTodos()
+    public async Task<IReadOnlyList<TodoDTO>> GetAllTodos()
     {
         try
         {
-            return await _repostory.GetAllTodos();
+            var todos =  await _repostory.GetAllTodos();
+            return todos.Select(MapToDTO).ToList();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            throw new Exception(e.Message);
+            throw;
         }
     }
 
-    public async Task<Todo?> GetTodoById(Guid id)
+    public async Task<TodoDTO> GetTodoById(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var todo = await _repostory.GetTodoById(id);
+
+            if (todo == null)
+            {
+                throw new NotFoundException("Todo with id: " + id + " does not exist");
+            }
+            return MapToDTO(todo);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
-    public async Task<Todo> CreateTodo(TodoDTO todo)
+    public async Task<Guid> CreateTodo(CreateTodoDTO dto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Todo todo = new Todo(dto.Name, dto.Description, dto.DueDate);
+            return await _repostory.CreateTodo(todo);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
-    public async Task<Todo> UpdateTodo(Guid id, Todo todo)
+    public async Task<TodoDTO> UpdateTodo(Guid id, TodoDTO dto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (!id.Equals(dto.Id))
+            {
+                throw new Exception("Id mismatch");
+            }
+            
+            var todo = await _repostory.GetTodoById(id);
+
+            if (todo == null)
+            {
+                throw new NotFoundException("Todo with id: " + id + " does not exist");
+            }
+            
+            todo.Name = dto.Name;
+            todo.Description = dto.Description;
+            todo.IsComplete = dto.IsDone;
+            todo.SetDueDate(dto.DueDate);
+            todo.SetUpdatedAt();
+
+            await _repostory.UpdateTodo(todo);
+            return dto;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
     public async Task DeleteTodo(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var todo = await _repostory.GetTodoById(id);
+
+            if (todo == null)
+            {
+                throw new NotFoundException("Todo with id: " + id + " does not exist");
+            }
+            
+            await _repostory.DeleteTodo(todo);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
-    public async Task<Todo> CompleteTodo(Guid id)
+    public async Task<TodoDTO> CompleteTodo(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var todo = await _repostory.GetTodoById(id);
+
+            if (todo == null)
+            {
+                throw new Exception("Todo with id: " + id + " does not exist");
+            }
+            
+            todo.IsComplete = true;
+            todo.SetUpdatedAt();
+
+            await _repostory.UpdateTodo(todo);
+            return MapToDTO(todo);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    private TodoDTO MapToDTO(Todo todo)
+    {
+        return new TodoDTO
+        {
+            Id = todo.Id,
+            Name = todo.Name,
+            Description = todo.Description,
+            IsDone = todo.IsComplete ?? false,
+            DueDate = todo.DueDate
+        };
     }
 }

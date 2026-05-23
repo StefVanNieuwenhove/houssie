@@ -26,17 +26,21 @@ const Navbar = () => {
   const { setOpen } = useSidebar();
   return (
     <>
-      <Sidebar collapsible='offcanvas'>
+      <Sidebar
+        className='pt-18 backdrop-saturate-180 backdrop-blur-xl border-r'
+        collapsible='offcanvas'>
         <SidebarHeader></SidebarHeader>
         <SidebarContent>
           {Links.map((group) => (
-            <SidebarGroup>
+            <SidebarGroup key={group.name}>
               <SidebarGroupLabel>{group.name}</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {group.links.map((link) =>
                     link.sublinks ? (
-                      <Collapsible className='group/collapsible'>
+                      <Collapsible
+                        key={link.name}
+                        className='group/collapsible'>
                         <SidebarMenuItem key={link.name}>
                           <SidebarMenuButton asChild>
                             <CollapsibleTrigger className='flex w-full items-center justify-between'>
@@ -82,11 +86,9 @@ const Navbar = () => {
           ))}
         </SidebarContent>
       </Sidebar>
-      <header className='h-16 w-full border-b flex items-center px-4 bg-primary'>
-        <SidebarTrigger className='text-white' />
-        <h1 className='text-lg font-bold text-center w-full uppercase text-white hover:text-gray-300 hover:underline ransition-colors'>
-          Houssie
-        </h1>
+      <header className='sticky top-0 z-50 w-full h-18 flex items-center justify-between border-b px-4 backdrop-saturate-180 backdrop-blur-xl'>
+        <SidebarTrigger />
+        <h1 className='text-white text-xl uppercase font-bold'>Houssie</h1>
       </header>
       <Outlet />
     </>

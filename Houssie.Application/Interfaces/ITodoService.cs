@@ -5,10 +5,10 @@ namespace Houssie.Application.Interfaces;
 
 public interface ITodoService
 {
-    Task<IReadOnlyList<Todo>> GetAllTodos();
-    Task<Todo?> GetTodoById(Guid id);
-    Task<Todo> CreateTodo(TodoDTO todo);
-    Task<Todo> UpdateTodo(Guid id, Todo todo);
+    Task<IReadOnlyList<TodoDTO>> GetAllTodos();
+    Task<TodoDTO> GetTodoById(Guid id);
+    Task<Guid> CreateTodo(CreateTodoDTO todo);
+    Task<TodoDTO> UpdateTodo(Guid id, TodoDTO todo);
     Task DeleteTodo(Guid id);
-    Task<Todo> CompleteTodo(Guid id);
+    Task<TodoDTO> CompleteTodo(Guid id);
 }

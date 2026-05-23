@@ -18,7 +18,8 @@ public class TodoRepository : ITodoRepository
     {
         try
         {
-            return await _context.Todos.OrderBy(x => x.DueDate).ToListAsync();
+            var todos =  await _context.Todos.OrderBy(x => x.DueDate).ToListAsync();
+            return todos.OrderBy(x => x.DueDate).ThenBy(x => x.Name).ToList();
         }
         catch (DbException ex)
         {
@@ -33,26 +34,87 @@ public class TodoRepository : ITodoRepository
 
     public async Task<Todo?> GetTodoById(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            return await _context.Todos.FindAsync(id);
+        }
+        catch (DbException ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw ex;
+        } 
+        catch (Exception ex)
+        {
+            throw new Exception($"TodoRepository - GetTodoById({id})", ex);
+        }
     }
 
-    public async Task CreateTodo(Todo todo)
+    public async Task<Guid> CreateTodo(Todo todo)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (todo == null)
+            {
+                throw new Exception("Todo is null");
+            }
+            
+            await _context.Todos.AddAsync(todo);
+            await _context.SaveChangesAsync();
+
+            return todo.Id;
+        }
+        catch (DbException ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw ex;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"TodoRepository - CreateTodo()", ex);
+        }
     }
 
     public async Task UpdateTodo(Todo todo)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (todo == null)
+            {
+                throw new Exception("Todo is null");
+            }
+            
+            _context.Todos.Update(todo);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbException ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw ex;
+        } catch (Exception ex)
+        {
+            throw new Exception($"TodoRepository - UpdateTodo()", ex);
+        }
     }
 
-    public async Task DeleteTodo(Guid id)
+    public async Task DeleteTodo(Todo todo)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<bool> ExistsTodo(Guid id)
-    {
-        throw new NotImplementedException();
+        try
+        {
+            if (todo == null)
+            {
+                throw new Exception("Todo is null");
+            }
+            
+            _context.Todos.Remove(todo);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbException ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw ex;
+        } catch (Exception ex)
+        {
+            throw new Exception($"TodoRepository - DeleteTodo()", ex);
+        }
     }
 }
