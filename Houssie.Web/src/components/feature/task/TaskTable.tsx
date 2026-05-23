@@ -7,15 +7,14 @@ import {
   TableRow,
   TableCell,
   TableHeader,
-} from '../ui/table';
-import { Checkbox } from '../ui/checkbox';
+} from '../../ui/table';
+import ToggleTaskStaus from './ToggleTaskStaus';
 
 type TaskTableProps = {
   data: Task[];
-  onTaskDone: (task: Task) => void;
 };
 
-const TaskTable = ({ data, onTaskDone }: TaskTableProps) => {
+const TaskTable = ({ data }: TaskTableProps) => {
   return (
     <Table className='max-w-dvh mx-auto border border-primary'>
       <TableHeader className='bg-primary'>
@@ -30,10 +29,7 @@ const TaskTable = ({ data, onTaskDone }: TaskTableProps) => {
         {data.map((task) => (
           <TableRow key={task.id}>
             <TableCell>
-              <Checkbox
-                defaultChecked={task.isDone}
-                onChange={() => onTaskDone(task)}
-              />
+              <ToggleTaskStaus Task={task} />
             </TableCell>
             <TableCell>{task.name}</TableCell>
             <TableCell>{task.description}</TableCell>

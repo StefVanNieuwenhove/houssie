@@ -8,6 +8,7 @@ import { TaskLayout } from './layout';
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar.tsx';
 import { NotFoundPage } from './pages/';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from './components/ui/sonner.tsx';
 
 const client = new QueryClient();
 
@@ -26,6 +27,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path='*' element={<NotFoundPage />} />
             </Routes>
           </SidebarInset>
+          <Toaster position='bottom-right' richColors />
         </SidebarProvider>
       </QueryClientProvider>
     </BrowserRouter>
