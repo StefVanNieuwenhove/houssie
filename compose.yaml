@@ -1,16 +1,32 @@
 ﻿version: '3.9'
 
 services:
+  api:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: houssie_api
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: 'Host=postgres;Port=5432;Database=houssie_db;Username=root;Password=root'
+      DOCKER_DEFAULT_PLATFORM: linux/amd64
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:16
-    container_name: houssie_postgres
+    container_name: houssie_db
     restart: always
     environment:
       POSTGRES_DB: houssie_db
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

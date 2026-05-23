@@ -22,7 +22,6 @@ public class TodoController : ControllerBase
         try
         {
             var todos = await _service.GetAllTodos();
-            Console.WriteLine(todos);
             return Ok(todos);
         }
         catch (Exception ex)
