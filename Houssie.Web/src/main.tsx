@@ -7,16 +7,16 @@ import { Navbar } from './components/navigation';
 import { TaskLayout } from './layout';
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar.tsx';
 import { NotFoundPage } from './pages/';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const bgImagesStyle =
-  "min-h-screen w-full bg-cover bg-center bg-no-repeat bg-[url('/assets/wallpaper_ipad.jpg')] lg:bg-[url('/assets/wallpaper_desktop.jpg')]";
+const client = new QueryClient();
+
+//const bgImagesStyle = "min-h-screen w-full bg-cover bg-center bg-no-repeat bg-[url('/assets/wallpaper_ipad.jpg')] lg:bg-[url('/assets/wallpaper_desktop.jpg')]";
 
 createRoot(document.getElementById('root')!).render(
-  <div
-    className={bgImagesStyle}
-    style={{ backgroundImage: `url(/assets/wallpaper_desktop.jpg)` }}>
-    <StrictMode>
-      <BrowserRouter>
+  <StrictMode>
+    <BrowserRouter>
+      <QueryClientProvider client={client}>
         <SidebarProvider defaultOpen={false}>
           <SidebarInset>
             <Navbar />
@@ -27,8 +27,7 @@ createRoot(document.getElementById('root')!).render(
             </Routes>
           </SidebarInset>
         </SidebarProvider>
-      </BrowserRouter>
-    </StrictMode>
-    ,
-  </div>,
+      </QueryClientProvider>
+    </BrowserRouter>
+  </StrictMode>,
 );

@@ -15,10 +15,20 @@ export type Linkgroup = {
   links: Link[];
 };
 
-export type Todo = {
+export type Task = {
   id: string;
   name: string;
   description: string;
-  isCompleted: boolean;
+  isDone: boolean;
   dueDate: Date;
 };
+
+export type ApiResponse<T> =
+  | {
+      success: true;
+      data: T;
+    }
+  | {
+      success: false;
+      error: string;
+    };
