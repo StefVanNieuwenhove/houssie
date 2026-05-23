@@ -14,11 +14,16 @@ public class TodoRepository : ITodoRepository
         _context = context;
     }
 
-    public async Task<IReadOnlyList<Todo>> GetAllTodos()
+    public async Task<IReadOnlyList<Todo>> GetAllTodos(bool? active = false)
     {
         try
         {
-            var todos =  await _context.Todos.OrderBy(x => x.DueDate).ToListAsync();
+            var todos =  await _context.Todos.AsQueryable().ToListAsync();
+
+            if (active.HasValue && active.Value)
+            {
+                todos = todos.Where(x => !x.IsComplete).ToList();
+            }
             return todos.OrderBy(x => x.DueDate).ThenBy(x => x.Name).ToList();
         }
         catch (DbException ex)

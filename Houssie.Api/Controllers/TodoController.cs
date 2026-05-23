@@ -17,11 +17,11 @@ public class TodoController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<TodoDTO>>> GetTodos()
+    public async Task<ActionResult<List<TodoDTO>>> GetTodos(bool? active = false)
     {
         try
         {
-            var todos = await _service.GetAllTodos();
+            var todos = await _service.GetAllTodos(active);
             return Ok(todos);
         }
         catch (Exception ex)

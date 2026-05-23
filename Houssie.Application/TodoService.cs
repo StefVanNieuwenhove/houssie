@@ -15,11 +15,11 @@ public class TodoService : ITodoService
         _repostory = repository;
     }
 
-    public async Task<IReadOnlyList<TodoDTO>> GetAllTodos()
+    public async Task<IReadOnlyList<TodoDTO>> GetAllTodos(bool? active = false)
     {
         try
         {
-            var todos =  await _repostory.GetAllTodos();
+            var todos =  await _repostory.GetAllTodos(active);
             return todos.Select(MapToDTO).ToList();
         }
         catch (Exception ex)
@@ -139,7 +139,7 @@ public class TodoService : ITodoService
             Id = todo.Id,
             Name = todo.Name,
             Description = todo.Description,
-            IsDone = todo.IsComplete ?? false,
+            IsDone = todo.IsComplete,
             DueDate = todo.DueDate
         };
     }

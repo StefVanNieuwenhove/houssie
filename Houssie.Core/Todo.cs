@@ -7,7 +7,7 @@ public class Todo
     public Guid Id { get; set; } =  Guid.NewGuid();
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public bool? IsComplete { get; set; } = false;
+    public bool IsComplete { get; set; } = false;
     public bool IsDeleted { get; set; } = false;
     [DataType(DataType.Date)] public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
     [DataType(DataType.Date)] public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
