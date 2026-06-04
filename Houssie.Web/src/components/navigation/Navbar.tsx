@@ -88,7 +88,8 @@ const Navbar = () => {
       </Sidebar>
       <header className='sticky top-0 z-50 w-full h-18 flex items-center justify-between border-b px-4 backdrop-saturate-180 backdrop-blur-xl'>
         <SidebarTrigger />
-        <h1 className='text-white text-xl uppercase font-bold'>Houssie</h1>
+        <h1 className='text-white text-3xl uppercase font-bold'>Houssie</h1>
+        <p>close</p>
       </header>
       <Outlet />
     </>
