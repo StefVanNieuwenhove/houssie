@@ -1,96 +1,121 @@
-import { Links } from '@/lib/Links';
-import { Link, NavLink, Outlet } from 'react-router';
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarTrigger,
-  useSidebar,
-} from '../ui/sidebar';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '../ui/collapsible';
-import { ChevronDown } from 'lucide-react';
+  AppBar,
+  Box,
+  Divider,
+  Drawer,
+  IconButton,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Outlet } from 'react-router-dom';
+import { routes } from '../../lib/Routes';
+import { useState } from 'react';
+import SubLink from './SubLink';
 
 const Navbar = () => {
-  const { setOpen } = useSidebar();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   return (
     <>
-      <Sidebar
-        className='pt-18 backdrop-saturate-180 backdrop-blur-xl border-r'
-        collapsible='offcanvas'>
-        <SidebarHeader></SidebarHeader>
-        <SidebarContent>
-          {Links.map((group) => (
-            <SidebarGroup key={group.name}>
-              <SidebarGroupLabel>{group.name}</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {group.links.map((link) =>
-                    link.sublinks ? (
-                      <Collapsible
+      <AppBar position='static'>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: '0 2rem',
+          }}>
+          <IconButton
+            edge='start'
+            color='inherit'
+            aria-label='menu'
+            sx={{ mr: 2 }}
+            onClick={toggleDrawer}>
+            <MenuIcon />
+          </IconButton>
+          <Drawer
+            variant='temporary'
+            open={isDrawerOpen}
+            onClose={toggleDrawer}
+            ModalProps={{ keepMounted: true }}>
+            <Box role='presentation' sx={{ width: 300 }}>
+              <Box
+                sx={{
+                  padding: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '100%',
+                }}>
+                <Typography
+                  variant='h6'
+                  component='h2'
+                  sx={{ textAlign: 'center', width: '100%' }}>
+                  Houssie
+                </Typography>
+              </Box>
+              <Divider />
+              <Box sx={{ width: '100%', py: 2, spacing: 0 }}>
+                {routes.map((route) => (
+                  <Box
+                    key={route.group}
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 0,
+                      m: 0,
+                    }}>
+                    <Typography
+                      variant='body2'
+                      component='h2'
+                      sx={{
+                        px: 2,
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: 1,
+                        alignItems: 'center',
+                        position: 'relative',
+                        '&::before, &::after': {
+                          content: '""',
+                          flex: 1,
+                          borderBottom: '1px solid #ccc',
+                        },
+                        '&::before': {
+                          mr: 1,
+                        },
+                        '&::after': {
+                          ml: 1,
+                        },
+                      }}>
+                      {route.group}
+                    </Typography>
+                    {route.links.map((link) => (
+                      <SubLink
                         key={link.name}
-                        className='group/collapsible'>
-                        <SidebarMenuItem key={link.name}>
-                          <SidebarMenuButton asChild>
-                            <CollapsibleTrigger className='flex w-full items-center justify-between'>
-                              <span className='flex items-center gap-2'>
-                                {link.icon} {link.name}
-                              </span>
-                              <ChevronDown
-                                size={16}
-                                className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180'
-                              />
-                            </CollapsibleTrigger>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                        <SidebarMenuSub>
-                          <CollapsibleContent>
-                            {link.sublinks.map((sublink) => (
-                              <SidebarMenuSubButton asChild key={sublink.path}>
-                                <Link
-                                  to={sublink.path}
-                                  onClick={() => setOpen(false)}>
-                                  {sublink.name}
-                                </Link>
-                              </SidebarMenuSubButton>
-                            ))}
-                          </CollapsibleContent>
-                        </SidebarMenuSub>
-                      </Collapsible>
-                    ) : (
-                      <SidebarMenuItem key={link.name}>
-                        <SidebarMenuButton asChild>
-                          <Link to={link.path} onClick={() => setOpen(false)}>
-                            <span className='flex items-center gap-2'>
-                              {link.icon} {link.name}
-                            </span>
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ),
-                  )}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          ))}
-        </SidebarContent>
-      </Sidebar>
-      <header className='sticky top-0 z-50 w-full h-18 flex items-center justify-between border-b px-4 backdrop-saturate-180 backdrop-blur-xl'>
-        <SidebarTrigger />
-        <h1 className='text-white text-3xl uppercase font-bold'>Houssie</h1>
-        <p>close</p>
-      </header>
+                        {...link}
+                        onClose={() => setIsDrawerOpen(false)}
+                      />
+                    ))}
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          </Drawer>
+
+          <Typography
+            variant='h4'
+            component='h1'
+            sx={{ flexGrow: 1, textAlign: 'center' }}>
+            Houssie
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Outlet />
     </>
   );

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Houssie.Infrastructure.Migrations
 {
     [DbContext(typeof(HoussieDbContext))]
-    [Migration("20260523135736_Initial")]
-    partial class Initial
+    [Migration("20260604154513_Todo_table")]
+    partial class Todo_table
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace Houssie.Infrastructure.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool?>("IsComplete")
+                    b.Property<bool>("IsComplete")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsDeleted")

@@ -1,34 +1,17 @@
 import type { ReactNode } from 'react';
 
-export type Link = {
-  name: string;
-  path: string;
-  icon: ReactNode;
-  sublinks?: {
-    name: string;
-    path: string;
-  }[];
-};
-
-export type Linkgroup = {
-  name: string;
+export type LinkGroup = {
+  group: string;
   links: Link[];
 };
 
-export type Task = {
-  id: string;
+export type Link = {
   name: string;
-  description: string;
-  isDone: boolean;
-  dueDate: Date;
+  icon: ReactNode;
+  href?: string;
+  subLinks?: {
+    name: string;
+    icon: ReactNode;
+    href: string;
+  }[];
 };
-
-export type ApiResponse<T> =
-  | {
-      success: true;
-      data: T;
-    }
-  | {
-      success: false;
-      error: string;
-    };

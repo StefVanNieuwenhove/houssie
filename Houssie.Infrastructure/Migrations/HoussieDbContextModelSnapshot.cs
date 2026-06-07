@@ -37,7 +37,7 @@ namespace Houssie.Infrastructure.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool?>("IsComplete")
+                    b.Property<bool>("IsComplete")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsDeleted")

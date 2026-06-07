@@ -141,7 +141,7 @@ public class TodoController : ControllerBase
             !Guid.TryParse(id, out Guid guid) ||
             guid == Guid.Empty)
         {
-            throw new InvalidIdException("Invalid id");
+            throw new InvalidIdException("Invalid Id");
         } 
         
         return guid;

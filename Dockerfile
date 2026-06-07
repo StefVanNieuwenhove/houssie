@@ -9,6 +9,7 @@ COPY Houssie.Api/Houssie.Api.csproj Houssie.Api/
 COPY Houssie.Core/Houssie.Core.csproj Houssie.Core/
 COPY Houssie.Application/Houssie.Application.csproj Houssie.Application/
 COPY Houssie.Infrastructure/Houssie.Infrastructure.csproj Houssie.Infrastructure/
+COPY Houssie.Test/Houssie.Test.csproj Houssie.Test/
 
 RUN dotnet restore Houssie.sln
 
