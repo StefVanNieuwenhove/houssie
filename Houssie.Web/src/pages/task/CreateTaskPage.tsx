@@ -1,5 +1,7 @@
+import { CreateTaskForm } from '../../components';
+
 const CreateTaskPage = () => {
-  return <div>CreateTaskPage</div>;
+  return <CreateTaskForm />;
 };
 
 export default CreateTaskPage;
