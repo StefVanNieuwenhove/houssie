@@ -1,39 +1,37 @@
+import { memo } from 'react';
 import { Container } from '@mui/material';
-import { getTasks } from '../../api';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Loader, TaskOverviewTable, ErrorBox } from '../../components';
+import { useTasks } from '../../context/TaskProvider';
+import { TaskOverview, CreateTaskBar } from '../../components/feature';
+import type { Task, CreateTask } from '../../types/task';
 
-const TaskPage = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['tasks'],
-    queryFn: getTasks,
-  });
-  const queryClient = useQueryClient();
+const TaskPage = memo(() => {
+  const { tasks } = useTasks();
 
-  const handleOnRetry = () => {
-    queryClient.invalidateQueries({ queryKey: ['tasks'] });
+  const handleTaskClick = (task: Task) => {
+    console.log(task);
   };
 
-  const handleOnClose = () => {};
-
+  const handleCreateTask = (task: CreateTask) => {
+    console.log('create task', task);
+  };
   return (
     <>
-      {isLoading && <Loader text='Fetching tasks...' />}
-      {error && (
-        <ErrorBox
-          error='Failed to fetch tasks'
-          title='Fetching tasks.'
-          onClose={handleOnClose}
-          onRetry={handleOnRetry}
-        />
-      )}
-      {data && (
-        <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
-          <TaskOverviewTable tasks={data} />
-        </Container>
-      )}
+      <Container
+        maxWidth='lg'
+        fixed
+        sx={{
+          mx: 'auto',
+          mt: 5,
+        }}>
+        <fieldset
+          style={{ border: '1px solid lightgray', borderRadius: '1rem' }}>
+          <legend>Tasks</legend>
+          <TaskOverview tasks={tasks} onTaskClick={handleTaskClick} />
+        </fieldset>
+        <CreateTaskBar onCreateTask={handleCreateTask} />
+      </Container>
     </>
   );
-};
+});
 
 export default TaskPage;

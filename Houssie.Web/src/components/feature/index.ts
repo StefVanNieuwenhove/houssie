@@ -1,2 +1,2 @@
-export { default as TaskOverviewTable } from './task/TaskOverviewTable';
-export { default as CreateTaskForm } from './task/CreateTaskForm';
+export { default as TaskOverview } from './task/TaskOverview';
+export { default as CreateTaskBar } from './task/CreateTaskBar';

@@ -15,17 +15,3 @@ export type Link = {
     href: string;
   }[];
 };
-
-export type Task = {
-  id: string;
-  name: string;
-  description: string;
-  isDone: boolean;
-  dueDate: string;
-};
-
-export type CreateTask = {
-  name: string;
-  description: string;
-  dueDate: string;
-};
