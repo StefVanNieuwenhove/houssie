@@ -1,0 +1,5 @@
+export const TOGGLE_THEME_KEY: string = "f"
+export const TIME_ZONE: string = "be-BE"
+export const DATE_FORMAT: string = "dd/MM/yyyy"
+export const DATE_TIME_FORMAT: string = "dd/MM/yyyy HH:mm"
+export const HEIGHT_NAVBAR: string = "4.5rem"
